@@ -42,7 +42,7 @@ if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['pas
 				// Si la requête retourne une ligne, c'est que l'utilisateur existe dans la DB
 				if($row > 0) {
 					// Message d'alerte et redirection vers login
-					header('Location: ../view/login.php?response=2');
+					header('Location: ../view/login.php?res=2');
 				}	
 
 				else {
@@ -54,7 +54,7 @@ if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['pas
 				$insert = mysqli_query($connexion,$sql);
 
 					// Message de succés
-					header('Location: ../view/login.php?response=1');
+					header('Location: ../view/login.php?res=1');
 				}
 			}
 		}

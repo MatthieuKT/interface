@@ -18,22 +18,27 @@
 
 	<div class="col-md-7">
 <?php
-	if (isset($_GET['response'])) {
-		$response = $_GET['response'];
-		if ($response === '1') {
-
+	if (isset($_GET['res'])) {
+		$res = $_GET['res'];
+		if ($res === '1') {
 			echo '<div class="alert alert-success" role="alert">
 				  <h4 class="alert-heading">Votre compte à été créé avec succés!</h4>
 				  <hr>
 				  <p class="mb-0">Vous pouvez désormais vous connecter avec les identifiants saisis lors de l\'inscription.</p>
 				  </div>';
 		}
-		elseif ($response === '2') {
-
+		elseif ($res === '2') {
 			echo '<div class="alert alert-danger" role="alert">
 				  <h4 class="alert-heading">Cet utilisateur existe déjà!</h4>
 				  <hr>
 				  <p class="mb-0">Connectez vous avec l\'adresse mail saisie lors de votre inscription.</p>
+				  </div>';
+		}
+		elseif ($res === '3') {
+			echo '<div class="alert alert-danger" role="alert">
+				  <h4 class="alert-heading">Mauvais login/mot de passe</h4>
+				  <hr>
+				  <p class="mb-0">Veuillez réessayer</p>
 				  </div>';
 		}
 
