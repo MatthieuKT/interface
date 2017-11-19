@@ -8,7 +8,10 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	yo
+
+<div class="container">
+	<a href="view/class.php" class="btn btn-primary" role="button">Ma classe</a>
+</div>
 
 </body>
 </html>
