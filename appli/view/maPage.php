@@ -23,7 +23,7 @@ $classCode = $_SESSION["classCode"];
     <a class="navbar-brand" href="#">MasterPiece</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/interface">Accueil <span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
