@@ -1,6 +1,6 @@
 <?php
 define('DBSERVER', 'localhost');
-define('DBNAME','masterpiece');
+define('DBNAME','interface');
 define('DBUSER', 'root');
 define('DBPWD', '');
 // Connexion à la BDD

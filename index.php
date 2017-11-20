@@ -30,8 +30,10 @@
 		<div id="signForm" class="col-md-6 border border-primary rounded">
 			<form action="#" method="POST">
 			  <div class="form-group">
-			    <label for="mail">RoomCode</label>
-				<input type="text" class="form-control" id="roomCode" name="roomCode" placeholder="roomCode">
+			    <div class="input-group">
+				    <span class="input-group-addon">#</span>
+				    <input type="text" class="form-control" id="roomCode" name="roomCode" placeholder="roomCode">
+				  </div>
 			  </div>
 			  <button type="submit" class="btn btn-primary">OK</button>
 			</form>
