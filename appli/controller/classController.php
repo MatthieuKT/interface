@@ -5,7 +5,7 @@ if (isset($_POST['newClass']) && isset($_POST['nomClasse'])) {
 	$classCode = rand(1000,9999);
 	$nomClasse = htmlspecialchars($_POST['nomClasse']);
 }
-
+  // Connexion à la DB
   require_once "../model/DBConnexion.php";
 
   $isExist = 'SELECT classCode FROM classe WHERE classCode="'.$classCode.'"';

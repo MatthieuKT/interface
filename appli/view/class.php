@@ -43,6 +43,8 @@ if (isset($_GET['res'])) {
 }
 ?>
 
+
+
 <?php
 /*
 *	ici on affiche les classes déjà créées
@@ -50,12 +52,14 @@ if (isset($_GET['res'])) {
 
 $resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
 while($donnees = mysqli_fetch_assoc($resultat)) {
-	echo '<button type="button" class="btn btn-outline-success">'.$donnees["nomClasse"].'</button>';
-	echo '#'.$donnees["classCode"];
+	echo "<b>".$donnees["nomClasse"]."</b>";
+	echo ': #'.$donnees["classCode"]. "</br>";
 }
 // ?
 mysqli_free_result($resultat);
 ?>
+
+
 
 
 

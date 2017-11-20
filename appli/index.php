@@ -21,7 +21,7 @@ require_once "view/navbar.html";
 		<div id="welcome" >
 		<h1>Bienvenue Mr. Kwant!</h1> 
 		<nav>
-			<a href="view/class.php" class="btn btn-outline-success" role="button">Ma classe</a>
+			<a href="view/class.php" class="btn btn-outline-success" role="button">Mes classes</a>
 			<a href="view/cours.php" class="btn btn-outline-success" role="button">Créer un cours</a>
 		</nav>
 		</div>
