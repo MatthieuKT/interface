@@ -28,11 +28,22 @@
 <div class="container">
 	<div class="row justify-content-md-center">
 		<div id="signForm" class="col-md-6 border border-primary rounded">
-			<form action="#" method="POST">
+			<?php
+			// Si la connnexion n'a pas matché, on affiche un message d'erreur
+				if (isset($_GET['res'])) {
+					$res = $_GET['res'];
+					if ($res === '1') {
+					echo '<div class="alert alert-danger" role="alert">
+							Ce code n\'existe pas, veuillez entrer un code valide
+				 		 </div>';
+					}
+				}
+			?>
+			<form action="appli/controller/classCodeController.php" method="post">
 			  <div class="form-group">
 			    <div class="input-group">
 				    <span class="input-group-addon">#</span>
-				    <input type="text" class="form-control" id="roomCode" name="roomCode" placeholder="roomCode">
+				    <input type="text" class="form-control" id="classCode" name="classCode" placeholder="classCode">
 				  </div>
 			  </div>
 			  <button type="submit" class="btn btn-primary">OK</button>
