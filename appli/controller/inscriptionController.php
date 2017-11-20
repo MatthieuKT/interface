@@ -15,17 +15,27 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"])) {
 	$isExist = 'SELECT nom, prenom FROM eleves WHERE nom="'.$nom.'" AND prenom="'.$prenom.'"';
 	$exist = mysqli_query($connexion, $isExist);
   	$row = mysqli_num_rows($exist);
-
+  	// Si il existe, alors on le connecte
   	if ($row > 0) {
-  		echo "t'existes déjà, patate, va te loguer normalement";
+  		session_start();
+		$_SESSION['nom'] = $nom;
+		$_SESSION['prenom'] = $prenom;
+		$_SESSION['classCode'] = $classCode;
+		// On le renvopie vers son espace perso
+		header('Location:../view/maPage.php');
 	}
 
 	// On inscrit l'élève
 	else {
 		$sql = 'INSERT INTO eleves(nom, prenom, classCode) VALUES ("'.$nom.'","'.$prenom.'","'.$classCode.'")';
 		$insert = mysqli_query($connexion,$sql);
-		echo "inscription réussie";
-
+		// On démarre une session pour sa page
+		session_start();
+		$_SESSION['nom'] = $nom;
+		$_SESSION['prenom'] = $prenom;
+		$_SESSION['classCode'] = $classCode;
+		// On le renvopie vers son espace perso
+		header('Location:../view/maPage.php');
 	}
 
 }

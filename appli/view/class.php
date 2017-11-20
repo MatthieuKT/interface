@@ -42,9 +42,6 @@ if (isset($_GET['res'])) {
 	}
 }
 ?>
-
-
-
 <?php
 /*
 *	ici on affiche les classes déjà créées
