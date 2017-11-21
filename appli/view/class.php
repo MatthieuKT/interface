@@ -22,7 +22,9 @@ include "navbar.html"
 <?php
 echo 'Vous n\'avez pas encore de classes pour le moment. Créez-en une! </br>';
 ?>
-	
+
+
+<!--Ajouter des controlleurs ici!!!-->
 <form action="../controller/classController.php" method="post">
 	<label for="nomClasse">Nom de la classe:</label>
 	<input type="text" name="nomClasse" id="nomClasse">
@@ -47,7 +49,7 @@ if (isset($_GET['res'])) {
 *	ici on affiche les classes déjà créées
 */
 
-/*$liste = mysqli_query($connexion,'SELECT nom, prenom, nomClasse From eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'"');*/
+/*$liste = mysqli_query($connexion,'SELECT nom, prenom, nomClasse From eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'"');
 
 $resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
 while($donnees = mysqli_fetch_assoc($resultat)) {
@@ -57,13 +59,17 @@ while($donnees = mysqli_fetch_assoc($resultat)) {
 		echo "<b>nom:</b> " . $students["nom"] . " " ;
 		echo "<b>prenom:</b> ". $students["prenom"] . "</br> " ;
 	}
+}*/
+
+$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
+
+// ajouter une condition si supérieur à 1
+while($donnees = mysqli_fetch_assoc($resultat)) {
+	echo '<form action="../controller/classController.php" method="post">
+			<input type="hidden" id="postClass" name="postClass" value="'.$donnees["classCode"].'">
+			<button type="submit" name="yo" class="btn btn-primary">'.$donnees["nomClasse"].'</button>		
+		  </form><br>';
 }
-
-
-while($donnees = mysqli_fetch_assoc($liste)) {
-	echo "classe: ".$donnees["nomClasse"]." ";
-}
-
 
 // ?
 mysqli_free_result($resultat);
