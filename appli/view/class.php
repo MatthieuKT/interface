@@ -65,14 +65,34 @@ $resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WH
 
 // ajouter une condition si supérieur à 1
 while($donnees = mysqli_fetch_assoc($resultat)) {
-	echo '<form action="../controller/classController.php" method="post">
+	echo '<form action="" method="post">
 			<input type="hidden" id="postClass" name="postClass" value="'.$donnees["classCode"].'">
-			<button type="submit" name="yo" class="btn btn-primary">'.$donnees["nomClasse"].'</button>		
+			<button type="submit" name="yo" class="btn btn-primary">'.$donnees["classCode"].'</button>		
 		  </form><br>';
 }
 
+
 // ?
 mysqli_free_result($resultat);
+
+if (isset($_POST['postClass'])) {
+  $postClass = htmlspecialchars($_POST['postClass']);
+
+  $data = mysqli_query($connexion, 'SELECT
+                                     nom_eleve, prenom_eleve 
+                                    From 
+                                     eleves el, classe cl 
+                                    WHERE 
+                                     el.classCode = cl.classCode 
+                                    AND 
+                                     cl.prof_ID="'.$_SESSION["id"].'"');
+
+  while($donnees = mysqli_fetch_assoc($data)) {
+    echo $donnees['nom_eleve']. " ";
+    echo $donnees['prenom_eleve'];
+  }
+
+}
 ?>
 
 
