@@ -7,7 +7,7 @@ session_start();
 	<meta charset="utf-8">
 	<title>Inscription</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<style type="text/css" src="css/style.css"></style>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
@@ -30,15 +30,24 @@ session_start();
 		<form action="../controller/inscriptionController.php" method="post">
 			<div class="form-group">
 				<label for="nom">Nom: </label>
-				<input type="text" class="form-control" name="nom">
+				<input id="nom" type="text" class="form-control" name="nom">
+				<div class="invalid-feedback">
+        			Le nom doit avoir au minimum 2 carractères
+      			</div>
 			</div>
 			<div class="form-group">
 				<label for="prenom">Prénom: </label>
-				<input type="text" class="form-control" name="prenom">
+				<input id="prenom" type="text" class="form-control" name="prenom">
+				<div class="invalid-feedback">
+        			Le prénom doit avoir au minimum 2 carractères
+      			</div>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="../controller/formController.js"></script>
 </body>
 </html>

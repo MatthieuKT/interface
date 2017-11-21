@@ -52,20 +52,17 @@ while($donnees = mysqli_fetch_assoc($resultat)) {
 	echo "<b>".$donnees["nomClasse"]."</b>";
 	echo ': #'.$donnees["classCode"]. "</br>";
 }
+
+$liste = mysqli_query($connexion,'SELECT nom, prenom From eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'"');
+while($donnees = mysqli_fetch_assoc($liste)) {
+	echo "nom: ".$donnees["nom"]." ";
+	echo 'prenom: '.$donnees["prenom"]. "</br>";
+}
+
+
 // ?
 mysqli_free_result($resultat);
 ?>
-
-
-
-
-
-
-
-
-
-
-
 
 
 </div>
