@@ -47,16 +47,21 @@ if (isset($_GET['res'])) {
 *	ici on affiche les classes déjà créées
 */
 
+/*$liste = mysqli_query($connexion,'SELECT nom, prenom, nomClasse From eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'"');*/
+
 $resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
 while($donnees = mysqli_fetch_assoc($resultat)) {
-	echo "<b>".$donnees["nomClasse"]."</b>";
-	echo ': #'.$donnees["classCode"]. "</br>";
+	echo '<h2>'.$donnees["nomClasse"] .'</h2>';
+	$liste = mysqli_query($connexion, 'SELECT nom, prenom FROM eleves WHERE classCode="'.$donnees["classCode"].'"');
+	while($students = mysqli_fetch_assoc($liste)) {
+		echo "<b>nom:</b> " . $students["nom"] . " " ;
+		echo "<b>prenom:</b> ". $students["prenom"] . "</br> " ;
+	}
 }
 
-$liste = mysqli_query($connexion,'SELECT nom, prenom From eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'"');
+
 while($donnees = mysqli_fetch_assoc($liste)) {
-	echo "nom: ".$donnees["nom"]." ";
-	echo 'prenom: '.$donnees["prenom"]. "</br>";
+	echo "classe: ".$donnees["nomClasse"]." ";
 }
 
 
