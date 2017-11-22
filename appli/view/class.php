@@ -92,7 +92,7 @@ if (isset($_POST['postClass'])) {
 
 		<form action="deleteClass" method="post">
 			<input type="hidden" name="modifyClass" value="<?php echo $postClass; ?>">
-			<input id="valider" type="submit" name="" class="btn btn-warning" value="modifier" />
+			<input id="valider" type="submit" class="btn btn-outline-secondary" value="modifier" />
 		</form> 
 
 
