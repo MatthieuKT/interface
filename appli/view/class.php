@@ -55,12 +55,6 @@ while($donnees = mysqli_fetch_assoc($resultat)) {
 			<button type="submit" name="yo" class="btn btn-primary">'.$donnees["nomClasse"].'</button>		
 		  </form>';
 }
-?>
-
-		<button type="button" class="btn btn-outline-danger pull-right">supprimer</button>
-
-
-<?php
 // ?
 mysqli_free_result($resultat);
 
@@ -68,7 +62,7 @@ if (isset($_POST['postClass'])) {
   $postClass = htmlspecialchars($_POST['postClass']);
 
   $data = mysqli_query($connexion, 'SELECT
-                                     nom_eleve, prenom_eleve 
+                                     nom_eleve, prenom_eleve
                                     From 
                                      eleves el, classe cl 
                                     WHERE 
@@ -87,7 +81,6 @@ if (isset($_POST['postClass'])) {
 			    </tr>
 			  </thead>
 			  <tbody>
-
 				<?php
 				  while($donnees = mysqli_fetch_assoc($data)) {
 				    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
@@ -96,26 +89,11 @@ if (isset($_POST['postClass'])) {
 				?>
 			  </tbody>
 		</table>
-<!-- 		<h2>ajouter un élève:</h2>
-		<form>
-			<div class="form-row">
-			  <div class="col">
-			    <label for="inputNom">Nom: </label>
-			    <input id="nom" name="inputNom" type="text" class="form-control" required">
-			    <div class="invalid-feedback">
-			      Le nom doit contenir au minimum deux carractères
-			    </div>
-			  </div>
-			  <div class="col">
-			    <label for="inputPrenom">Prenom: </label>
-			    <input id="prenom" name="inputPrenom" type="text" class="form-control" required">
-			    <div class="invalid-feedback">
-			      Le prénom doit contenir au minimum deux carractères
-			    </div>
-			  </div>
-			</div>
-			<input id="valider" type="submit" class="btn btn-primary" value="Ajouter"/>
-		</form> -->
+
+		<form action="deleteClass" method="post">
+			<input type="hidden" name="modifyClass" value="<?php echo $postClass; ?>">
+			<input id="valider" type="submit" name="" class="btn btn-warning" value="modifier" />
+		</form> 
 
 
 	</div><!--/.tableList-->
