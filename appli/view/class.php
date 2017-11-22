@@ -43,23 +43,6 @@ if (isset($_GET['res'])) {
 			  </div>';
 	}
 }
-?>
-<?php
-/*
-*	ici on affiche les classes déjà créées
-*/
-
-/*$liste = mysqli_query($connexion,'SELECT nom, prenom, nomClasse From eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'"');
-
-$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
-while($donnees = mysqli_fetch_assoc($resultat)) {
-	echo '<h2>'.$donnees["nomClasse"] .'</h2>';
-	$liste = mysqli_query($connexion, 'SELECT nom, prenom FROM eleves WHERE classCode="'.$donnees["classCode"].'"');
-	while($students = mysqli_fetch_assoc($liste)) {
-		echo "<b>nom:</b> " . $students["nom"] . " " ;
-		echo "<b>prenom:</b> ". $students["prenom"] . "</br> " ;
-	}
-}*/
 
 $resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
 
@@ -67,7 +50,7 @@ $resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WH
 while($donnees = mysqli_fetch_assoc($resultat)) {
 	echo '<form action="" method="post">
 			<input type="hidden" id="postClass" name="postClass" value="'.$donnees["classCode"].'">
-			<button type="submit" name="yo" class="btn btn-primary">'.$donnees["classCode"].'</button>		
+			<button type="submit" name="yo" class="btn btn-primary">'.$donnees["nomClasse"].'</button>		
 		  </form><br>';
 }
 
@@ -88,18 +71,27 @@ if (isset($_POST['postClass'])) {
                                      cl.prof_ID="'.$_SESSION["id"].'"
                                     AND 
                                     el.classCode="'.$postClass.'"');
-
-  while($donnees = mysqli_fetch_assoc($data)) {
-    echo $donnees['nom_eleve']. " ";
-    echo $donnees['prenom_eleve'];
-  }
-
-}
 ?>
 
+<table class="table">
+	  <thead>
+	    <tr>
+	      <th scope="col">Nom</th>
+	      <th scope="col">Prénom</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+
+		<?php
+		  while($donnees = mysqli_fetch_assoc($data)) {
+		    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
+		  }
+		}
+		?>
+	  </tbody>
+</table>
 
 </div>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
