@@ -1,7 +1,16 @@
 #welcome {
 	text-align: center;
 }
-
 #signForm {
 	padding: 12px;
+}
+.formClass {
+	display: inline !important;
+	vertical-align: top;
+}
+#tableDisplay {
+	padding-top: 25px;
+}
+#classList {
+	margin-top: 35px;
 }

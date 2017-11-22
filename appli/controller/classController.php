@@ -16,11 +16,9 @@ if (isset($_POST['newClass']) && isset($_POST['nomClasse'])) {
   	# code à éxecutér pour produite un nouveau classCode
   	echo "cette classe existe déjà (message au dev)";
   }
-
   else {
     // On renforcera la sécurité plus tard
-    if (strlen($nomClasse) < 2) {
-      echo "on insère";
+    if (strlen($nomClasse) > 2) {
       $sql = 'INSERT INTO classe(classCode, prof_ID, nomClasse) VALUES ("'.$classCode.'", "'.$_SESSION['id'].'", "'.$nomClasse.'")';
       $insert = mysqli_query($connexion, $sql);
       header('Location: ../view/class.php?res=1');
