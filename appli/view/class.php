@@ -85,7 +85,9 @@ if (isset($_POST['postClass'])) {
                                     WHERE 
                                      el.classCode = cl.classCode 
                                     AND 
-                                     cl.prof_ID="'.$_SESSION["id"].'"');
+                                     cl.prof_ID="'.$_SESSION["id"].'"
+                                    AND 
+                                    el.classCode="'.$postClass.'"');
 
   while($donnees = mysqli_fetch_assoc($data)) {
     echo $donnees['nom_eleve']. " ";
