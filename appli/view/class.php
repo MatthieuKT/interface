@@ -91,7 +91,7 @@ include "navbar.html"
 		else {
 			echo " tuto pour créer une classe!";
 		}?>
-	</div><!--/.tableList-->
+	</div><!--/.tableDisplay-->
 </div><!--/.classList-->
 </div><!--/.container-->
 

@@ -37,10 +37,44 @@ include "navbar.html"
 ?>
 </nav>
 
+<?php
+// Si le classCode est présent dans l'URL ET est un nombre
+if (isset($_GET['code']) && is_numeric($_GET['code'])) {
+	// On sécurise la valeur du paramètre
+	$classCode = htmlspecialchars($_GET['code']);
+	// On démarre une requête mysqli
+	$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve FROM eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
+}
+?>
+
+	<div id="tableDisplay" class="col-md-6">
+		<p>classCode: <b>#<?php echo $classCode;?></b></p>
+		<table class="table">
+		   <thead>
+		     <tr>
+		       <th scope="col">Nom</th>
+		       <th scope="col">Prénom</th>
+		     </tr>
+		   </thead>
+		   <tbody>
+		<?php
+		  while($donnees = mysqli_fetch_assoc($data)) {
+		    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
+		  }
+		  echo '</tbody>
+			</table>';
+			  if(isset($classCode)){
+			  	echo '<form action="deleteClass" method="post">
+			  			<input type="hidden" name="modifyClass" value="'.$classCode.'">
+			  		    <input id="valider" type="submit" class="btn btn-outline-secondary" value="modifier"/>
+			  		  </form>';
+		 		}
+		 	
+?>
+	</div><!--/.tableDisplay-->
 
 
 
-	</div><!--/.tableList-->
 </div><!--/.classList-->
 </div><!--/.container-->
 
@@ -49,7 +83,7 @@ include "navbar.html"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script type="text/javascript">
-	// On se base sur l'URL pour définir la classe active!
+	// On se base sur l'URL pour définir la classe active des liens!
 	$(document).ready(function() {
 		// On stocke la valeur de l'URL dans une variable
 		var url = window.location.href;
@@ -60,14 +94,10 @@ include "navbar.html"
 		// On soustrais la longueur totale de l'URL à l'index de "?", il nous reste donc le paramètre
 		var param = url.substr(pos, len - pos);
 
-		console.log('param init', param);
-
 		// A tous les liens
 		$(".yo").each(function() {
 			// On récupère la valeur de leur attribut href
 			var href = $(this).attr('href');
-			console.log('param', param);
-			console.log('href', href);
 			// Celui parmi eux qui correspond à l'attribut en URL, se voit attribué la classe active 
 			if (param === href) {
 				$(this).addClass("active")
