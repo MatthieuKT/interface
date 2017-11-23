@@ -60,7 +60,7 @@ session_start();
 
 	?>
 
-	<table class="table">
+	<table id="dataDisplay" class="table">
 		  <thead>
 		    <tr>
 		      <th scope="col">Nom</th>
@@ -79,6 +79,7 @@ session_start();
 
 	<button type="button" class="btn btn-outline-primary">Modifier</button>
 	<button type="button" class="btn btn-outline-danger">Supprimer</button>
+	<a href="class.php" class="btn btn-primary" role="button">Retour à l'index</a>
 </div><!--/.container-->
 </body>
 </html>
