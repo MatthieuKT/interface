@@ -61,8 +61,10 @@ include "navbar.html"
 			  // On va chercher les données en rapport avec sa requête (le nom et prénom de chaque élève de la classe cliquée)
 			  $data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve FROM eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$postClass.'"');
 	?>
+
+
 		<div id="tableDisplay" class="col-md-6">
-			<p> classCode: <b>#<?php echo $postClass;?></b></p>
+			<p>classCode: <b>#<?php echo $postClass;?></b></p>
 			<table class="table">
 			   <thead>
 			     <tr>
@@ -92,7 +94,6 @@ include "navbar.html"
 	</div><!--/.tableList-->
 </div><!--/.classList-->
 </div><!--/.container-->
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
