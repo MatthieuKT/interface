@@ -8,17 +8,10 @@
 	display: inline !important;
 	vertical-align: top;
 }
-#tableDisplay {
-	padding-top: 25px;
-}
-#classList {
-	margin-top: 35px;
-}
 #formulaire {
 	margin-top: 25px;
 	margin-bottom: 35px;
 }
-#dataDisplay {
-	margin-top: 25px;
-	margin-bottom: 25px;
+#main {
+	margin-top: 45px;
 }

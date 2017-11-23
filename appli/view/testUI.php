@@ -18,62 +18,61 @@ require_once "../model/DBConnexion.php";
 include "navbar.html"
 ?>
 <div class="container">	
-<!--Le formulaire permettant de créer une classe-->
-<h2>Créer une classe</h2>
-	<!--Ajouter des controlleurs ici!!!-->
-	<form class="form-inline" action="../controller/classController.php" method="post">
-	  <div class="form-group mx-sm-3">
-	    <input type="text" name="nomClasse" class="form-control" id="nomClasse" placeholder="Nom de la classe">
-	  </div>
-	  <button type="submit" name="newClass" class="btn btn-outline-success">Créer!</button>
-	</form>
 
 
-	<div class="card" >
+
+	<div id="main" class="card text-center">
 	    <div class="card-header">
-
-				<ul class="nav nav-tabs card-header-tabs">
-					<?php
-						$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
-						while($donnees = mysqli_fetch_assoc($resultat)) {
-							echo '<li class="nav-item">
-									<a class="yo nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>
-								 </li>';
-						}
-					?>
-		    	</ul>
-		</div>
-		<div class="card-body">
-			<table class="table table-striped table-hover">
-			    <thead>
-			     <tr>
-			       <th scope="col">Nom</th>
-			       <th scope="col">Prénom</th>
-			     </tr>
-			    </thead>
-			    <tbody>
+			<ul class="nav nav-tabs card-header-tabs">
 				<?php
-				// Si le classCode est présent dans l'URL ET est un nombre
-				if (isset($_GET['code']) && is_numeric($_GET['code'])) {
-					// On sécurise la valeur du paramètre
-					$classCode = htmlspecialchars($_GET['code']);
-					// On démarre une requête mysqli
-					$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve
-													  FROM eleves el, classe cl
-													  WHERE el.classCode = cl.classCode
-													  AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
-					while($donnees = mysqli_fetch_assoc($data)) {
-						echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
-					};
-					if(isset($classCode)){
-						// On va éviter de faire appel à une autre page 
-				 	}	
-				}			 	
+				// A rajouter absolument: empécher d'accéder aux pages sans login !!!!!!
+					$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
+					while($donnees = mysqli_fetch_assoc($resultat)) {
+						echo '<li class="nav-item">
+								<a class="yo nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>
+							 </li>';
+					}
 				?>
-				</tbody>
-			</table>
+	    	</ul>	
+		</div>
+		<div class="card-body ">
+			<h4 class="card-title">Le ClassCode: #<?php if (isset($_GET['code'])) {echo $_GET['code'];}?></h4>
+			    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+   	<!--Cette div centre le tableau -->
+	<div class="row justify-content-md-center">
+		<table id="tableDisplay" class="table table-striped table-hover w-50">
+		    <thead>
+		     <tr>
+		       <th scope="col">Nom</th>
+		       <th scope="col">Prénom</th>
+		       <th scope="col">modifier</th>
+		     </tr>
+		    </thead>
+		    <tbody>
+			<?php
+			// Si le classCode est présent dans l'URL ET est un nombre
+			if (isset($_GET['code']) && is_numeric($_GET['code'])) {
+				// On sécurise la valeur du paramètre
+				$classCode = htmlspecialchars($_GET['code']);
+				// On démarre une requête mysqli
+				$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve
+												  FROM eleves el, classe cl
+												  WHERE el.classCode = cl.classCode
+												  AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
+				while($donnees = mysqli_fetch_assoc($data)) {
+					echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td><td></td</tr>';
+				};
+				if(isset($classCode)){
+					// On va éviter de faire appel à une autre page 
+			 	}	
+			}?>
+			</tbody>
+		</table>
+	</div>
+
 		</div><!--/.card-body-->
-		<div class="card-footer text-muted">
+		<div class="card-footer">
 	    	<button type="button" class="btn btn-outline-primary">modifier</button>
 	    	<button type="button" class="btn btn-outline-danger">supprimer</button>
 	  	</div>
