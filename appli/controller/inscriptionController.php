@@ -5,12 +5,10 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"])) {
 	$classCode = $_SESSION["classCode"];
 	$nom = htmlspecialchars($_POST["nom"]);
 	$prenom = htmlspecialchars($_POST["prenom"]);
-
 	// contrôle des noms et prénoms avec les regex etc...
 
 	// Connexion à la DB 
 	require_once "../model/DBConnexion.php";
-
 	// On met un if exist
 	$isExist = 'SELECT nom_eleve, prenom_eleve FROM eleves WHERE nom="'.$nom.'" AND prenom="'.$prenom.'"';
 	$exist = mysqli_query($connexion, $isExist);
@@ -24,7 +22,6 @@ if (isset($_POST["nom"]) && isset($_POST["prenom"])) {
 		// On le renvoie vers son espace perso
 		header('Location:../view/maPage.php');
 	}
-
 	// On inscrit l'élève
 	else {
 		$sql = 'INSERT INTO eleves(nom_eleve, prenom_eleve, classCode) VALUES ("'.$nom.'","'.$prenom.'","'.$classCode.'")';

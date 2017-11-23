@@ -29,52 +29,55 @@ include "navbar.html"
 	</form>
 
 
+	<div class="card" >
+	    <div class="card-header">
 
-	<div id="classList">
-		<h2>Mes classes</h2>
-			<nav class="nav nav-pills flex-column flex-sm-row">
-			<?php
-				$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
-				while($donnees = mysqli_fetch_assoc($resultat)) {
-					echo '<a class="yo flex-sm-fill text-sm-center nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>';
-					//echo '<a class="yo flex-sm-fill text-sm-center nav-link" href="#">'.$donnees["nomClasse"].'</a>';
-				}
-			?>
-			<a class="nav-link pull-right" href="#">Supprimer une classe</a>
-			</nav>
-			<?php
-			// Si le classCode est présent dans l'URL ET est un nombre
-			if (isset($_GET['code']) && is_numeric($_GET['code'])) {
-				// On sécurise la valeur du paramètre
-				$classCode = htmlspecialchars($_GET['code']);
-				// On démarre une requête mysqli
-				$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve FROM eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
-			
-			?>
-			<!--Cela ne doit s'afficher que si le résultat retourne au moins un résultat-->
-			<div id="tableDisplay" class="col-md-6">
-				<p>classCode: <b>#<?php if(isset($classCode)){echo $classCode;}?></b></p>
-				<table class="table">
-				   <thead>
-				     <tr>
-				       <th scope="col">Nom</th>
-				       <th scope="col">Prénom</th>
-				     </tr>
-				   </thead>
-				   <tbody>
+				<ul class="nav nav-tabs card-header-tabs">
+					<?php
+						$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
+						while($donnees = mysqli_fetch_assoc($resultat)) {
+							echo '<li class="nav-item">
+									<a class="yo nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>
+								 </li>';
+						}
+					?>
+		    	</ul>
+		</div>
+		<div class="card-body">
+			<table class="table table-striped table-hover">
+			    <thead>
+			     <tr>
+			       <th scope="col">Nom</th>
+			       <th scope="col">Prénom</th>
+			     </tr>
+			    </thead>
+			    <tbody>
 				<?php
-				  while($donnees = mysqli_fetch_assoc($data)) {
-				    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
-				  }
-				  echo '</tbody>
-					</table>';
-					  if(isset($classCode)){
+				// Si le classCode est présent dans l'URL ET est un nombre
+				if (isset($_GET['code']) && is_numeric($_GET['code'])) {
+					// On sécurise la valeur du paramètre
+					$classCode = htmlspecialchars($_GET['code']);
+					// On démarre une requête mysqli
+					$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve
+													  FROM eleves el, classe cl
+													  WHERE el.classCode = cl.classCode
+													  AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
+					while($donnees = mysqli_fetch_assoc($data)) {
+						echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
+					};
+					if(isset($classCode)){
 						// On va éviter de faire appel à une autre page 
-				 		}	
-			}			 	
-		?>
-			</div><!--/.tableDisplay-->
-	</div><!--/.classList-->
+				 	}	
+				}			 	
+				?>
+				</tbody>
+			</table>
+		</div><!--/.card-body-->
+		<div class="card-footer text-muted">
+	    	<button type="button" class="btn btn-outline-primary">modifier</button>
+	    	<button type="button" class="btn btn-outline-danger">supprimer</button>
+	  	</div>
+	</div>
 </div><!--/.container-->
 
 
@@ -93,7 +96,6 @@ include "navbar.html"
 		// On soustrais la longueur totale de l'URL à l'index de "?", il nous reste donc le paramètre
 		var param = url.substr(pos, len - pos);
 
-		// A tous les liens
 		$(".yo").each(function() {
 			// On récupère la valeur de leur attribut href
 			var href = $(this).attr('href');
