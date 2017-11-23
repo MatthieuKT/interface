@@ -17,65 +17,64 @@ require_once "../model/DBConnexion.php";
 // Navbar
 include "navbar.html"
 ?>
-<div class="container">
+<div class="container">	
+<!--Le formulaire permettant de créer une classe-->
+<h2>Créer une classe</h2>
+	<!--Ajouter des controlleurs ici!!!-->
+	<form class="form-inline" action="../controller/classController.php" method="post">
+	  <div class="form-group mx-sm-3">
+	    <input type="text" name="nomClasse" class="form-control" id="nomClasse" placeholder="Nom de la classe">
+	  </div>
+	  <button type="submit" name="newClass" class="btn btn-outline-success">Créer!</button>
+	</form>
 
 
 
-
-	
 	<div id="classList">
 		<h2>Mes classes</h2>
-
-
-<nav class="nav nav-pills flex-column flex-sm-row">
-<?php
-	$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
-	while($donnees = mysqli_fetch_assoc($resultat)) {
-		echo '<a class="yo flex-sm-fill text-sm-center nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>';
-		//echo '<a class="yo flex-sm-fill text-sm-center nav-link" href="#">'.$donnees["nomClasse"].'</a>';
-	}
-?>
-</nav>
-
-<?php
-// Si le classCode est présent dans l'URL ET est un nombre
-if (isset($_GET['code']) && is_numeric($_GET['code'])) {
-	// On sécurise la valeur du paramètre
-	$classCode = htmlspecialchars($_GET['code']);
-	// On démarre une requête mysqli
-	$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve FROM eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
-}
-?>
-
-	<div id="tableDisplay" class="col-md-6">
-		<p>classCode: <b>#<?php echo $classCode;?></b></p>
-		<table class="table">
-		   <thead>
-		     <tr>
-		       <th scope="col">Nom</th>
-		       <th scope="col">Prénom</th>
-		     </tr>
-		   </thead>
-		   <tbody>
-		<?php
-		  while($donnees = mysqli_fetch_assoc($data)) {
-		    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
-		  }
-		  echo '</tbody>
-			</table>';
-			  if(isset($classCode)){
-			  	echo '<form action="deleteClass" method="post">
-			  			<input type="hidden" name="modifyClass" value="'.$classCode.'">
-			  		    <input id="valider" type="submit" class="btn btn-outline-secondary" value="modifier"/>
-			  		  </form>';
-		 		}
-		 	
-?>
-	</div><!--/.tableDisplay-->
-
-
-
-</div><!--/.classList-->
+			<nav class="nav nav-pills flex-column flex-sm-row">
+			<?php
+				$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
+				while($donnees = mysqli_fetch_assoc($resultat)) {
+					echo '<a class="yo flex-sm-fill text-sm-center nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>';
+					//echo '<a class="yo flex-sm-fill text-sm-center nav-link" href="#">'.$donnees["nomClasse"].'</a>';
+				}
+			?>
+			<a class="nav-link pull-right" href="#">Supprimer une classe</a>
+			</nav>
+			<?php
+			// Si le classCode est présent dans l'URL ET est un nombre
+			if (isset($_GET['code']) && is_numeric($_GET['code'])) {
+				// On sécurise la valeur du paramètre
+				$classCode = htmlspecialchars($_GET['code']);
+				// On démarre une requête mysqli
+				$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve FROM eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
+			
+			?>
+			<!--Cela ne doit s'afficher que si le résultat retourne au moins un résultat-->
+			<div id="tableDisplay" class="col-md-6">
+				<p>classCode: <b>#<?php if(isset($classCode)){echo $classCode;}?></b></p>
+				<table class="table">
+				   <thead>
+				     <tr>
+				       <th scope="col">Nom</th>
+				       <th scope="col">Prénom</th>
+				     </tr>
+				   </thead>
+				   <tbody>
+				<?php
+				  while($donnees = mysqli_fetch_assoc($data)) {
+				    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
+				  }
+				  echo '</tbody>
+					</table>';
+					  if(isset($classCode)){
+						// On va éviter de faire appel à une autre page 
+				 		}	
+			}			 	
+		?>
+			</div><!--/.tableDisplay-->
+	</div><!--/.classList-->
 </div><!--/.container-->
 
 
