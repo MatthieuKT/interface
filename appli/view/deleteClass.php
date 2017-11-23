@@ -13,14 +13,29 @@ session_start();
 <body>
 <?php
 	require_once "navbar.html";
+	if (isset($_POST['modifyClass'])) {
+	$classCode =  htmlspecialchars($_POST['modifyClass']);
+
+	require_once "../model/DBConnexion.php";
+
+	$data = mysqli_query($connexion, 'SELECT
+                                     nom_eleve, prenom_eleve
+                                    From 
+                                     eleves el, classe cl 
+                                    WHERE 
+                                     el.classCode = cl.classCode 
+                                    AND 
+                                     cl.prof_ID="'.$_SESSION["id"].'"
+                                    AND 
+                                    el.classCode="'.$classCode.'"');
 ?>
 
 
 <div class="container">
-	<h1><?php echo $_POST['modifyClass'];?></h1>
+	<h1><?php echo $classCode;?></h1>
 
 <div id="formulaire">
-	<form action="" method="POST">
+	<form action="../controller/addStudentsController.php" method="POST">
 		<div class="form-row">
 		  <div class="col">
 		    <label for="inputNom">Nom: </label>
@@ -37,30 +52,12 @@ session_start();
 		    </div>
 		  </div>
 		</div>
+		<input type="hidden" name="classCode" value="<?php echo $classCode; ?>">
 		<button type="submit" class="btn btn-outline-primary">Ajouter</button>
 	</form>
 </div>
 
-	<?php
-	if (isset($_POST['modifyClass'])) {
-		$postClass =  htmlspecialchars($_POST['modifyClass']);
-
-		require_once "../model/DBConnexion.php";
-
-		$data = mysqli_query($connexion, 'SELECT
-	                                     nom_eleve, prenom_eleve
-	                                    From 
-	                                     eleves el, classe cl 
-	                                    WHERE 
-	                                     el.classCode = cl.classCode 
-	                                    AND 
-	                                     cl.prof_ID="'.$_SESSION["id"].'"
-	                                    AND 
-	                                    el.classCode="'.$postClass.'"');
-
-	?>
-
-	<table class="table">
+	<table id="dataDisplay" class="table">
 		  <thead>
 		    <tr>
 		      <th scope="col">Nom</th>
@@ -79,6 +76,7 @@ session_start();
 
 	<button type="button" class="btn btn-outline-primary">Modifier</button>
 	<button type="button" class="btn btn-outline-danger">Supprimer</button>
+	<a href="class.php" class="btn btn-primary" role="button">Retour à l'index</a>
 </div><!--/.container-->
 </body>
 </html>
