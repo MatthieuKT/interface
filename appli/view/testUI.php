@@ -33,57 +33,25 @@ include "navbar.html"
 							 </li>';
 					}
 				?>
-	    	</ul>	
+			</ul>	
 		</div>
 		<div id="content" class="card-body">
-			<h4 class="card-title">Le ClassCode: #<?php if (isset($_GET['code'])) {echo $_GET['code'];}?></h4>
-			    <p class="card-text">Partagez ce classCode avec vos élèves pour qu'ils s'inscrivent sur <a href="#">MasterClass</a>.</p>
-			    <a href="#" class="btn btn-outline-primary">Ou ajoutez-les</a>
-
-   	<!--Cette div centre le tableau -->
-	<div id="tableDisplay"class="row justify-content-md-center">
-		<table class="table table-striped table-hover w-50">
-		    <thead>
-		     <tr>
-		       <th scope="col">Nom</th>
-		       <th scope="col">Prénom</th>
-		       <th scope="col">supprimer</th>
-		     </tr>
-		    </thead>
-		    <tbody>
-			<?php
-			// Si le classCode est présent dans l'URL ET est un nombre
-			if (isset($_GET['code']) /*&& is_numeric($_GET['code']*/) {
+				<?php
+				// Si le classCode est présent dans l'URL ET est un nombre
+				if (isset($_GET['code']) /*&& is_numeric($_GET['code']*/) {
 				// On sécurise la valeur du paramètre
 				$classCode = htmlspecialchars($_GET['code']);
-				// Si le code est sur nouvelle classe
+				// On affiche le formulaire de nouvelle classe
 				if ($classCode === "new") {
-					echo "ça ne doit s'afficher que quand le code est égal à new!!";
+					require_once "addClassForm.php";
 				}
+				// On affiche les tableaux de classes
 				else {
-				// On démarre une requête mysqli
-				$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve
-												  FROM eleves el, classe cl
-												  WHERE el.classCode = cl.classCode
-												  AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
-				while($donnees = mysqli_fetch_assoc($data)) {
-					echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td>
-					<td><button type="button" class="btn btn-sm btn-outline-danger">X</button></td></tr>';
-				};
-				if(isset($classCode)){
-					// On va éviter de faire appel à une autre page 
-			 	}	
-			}
-			}?>
-			</tbody>
-		</table>
-	</div>
-
+				require_once "requireUI.php";	
+				}
+				}?>
 		</div><!--/.card-body-->
-		<div class="card-footer">
-	    	<button type="button" class="btn btn-outline-primary">modifier</button>
-	    	<button type="button" class="btn btn-outline-danger">supprimer</button>
-	  	</div>
+
 	</div>
 </div><!--/.container-->
 
@@ -107,16 +75,22 @@ include "navbar.html"
 		$(".yo").each(function() {
 			// On récupère la valeur de leur attribut href
 			var href = $(this).attr('href');
-			var newClass = '?code=yo'
+			var newClass = '?code=new'
 			// Celui parmi eux qui correspond à l'attribut en URL, se voit attribué la classe active 
 			if (param === href) {
 				$(this).addClass("active")
-			} 
+				// le text center n'est là que pour les tableaux
+				//$('#main').addClass('text-center');
+			} else if (param === newClass) {
+				// Le formulaire newClassForm peut ainsi être affiché normalement
+				//$('#main').removeClass('text-center');
+			}
 			else {
-				// Les autres on leur enlève
+				// Les autres on leur enlève l'actif
 				$(this).removeClass("active");
 			}
 		});
+
 	});
 
 </script>
