@@ -18,12 +18,12 @@ require_once "../model/DBConnexion.php";
 include "navbar.html"
 ?>
 <div class="container">	
-
-
-
 	<div id="main" class="card text-center">
 	    <div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs">
+				  <li class="nav-item">
+   					 <a class="yo nav-link" href="?code=new">Nouvelle classe</a>
+ 				  </li>
 				<?php
 				// A rajouter absolument: empécher d'accéder aux pages sans login !!!!!!
 					$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
@@ -35,10 +35,10 @@ include "navbar.html"
 				?>
 	    	</ul>	
 		</div>
-		<div class="card-body ">
+		<div id="content" class="card-body">
 			<h4 class="card-title">Le ClassCode: #<?php if (isset($_GET['code'])) {echo $_GET['code'];}?></h4>
 			    <p class="card-text">Partagez ce classCode avec vos élèves pour qu'ils s'inscrivent sur <a href="#">MasterClass</a>.</p>
-			    <a href="#" class="btn btn-primary">Ou ajoutez-les</a>
+			    <a href="#" class="btn btn-outline-primary">Ou ajoutez-les</a>
 
    	<!--Cette div centre le tableau -->
 	<div id="tableDisplay"class="row justify-content-md-center">
@@ -47,26 +47,33 @@ include "navbar.html"
 		     <tr>
 		       <th scope="col">Nom</th>
 		       <th scope="col">Prénom</th>
-		       <th scope="col">modifier</th>
+		       <th scope="col">supprimer</th>
 		     </tr>
 		    </thead>
 		    <tbody>
 			<?php
 			// Si le classCode est présent dans l'URL ET est un nombre
-			if (isset($_GET['code']) && is_numeric($_GET['code'])) {
+			if (isset($_GET['code']) /*&& is_numeric($_GET['code']*/) {
 				// On sécurise la valeur du paramètre
 				$classCode = htmlspecialchars($_GET['code']);
+				// Si le code est sur nouvelle classe
+				if ($classCode === "new") {
+					echo "ça ne doit s'afficher que quand le code est égal à new!!";
+				}
+				else {
 				// On démarre une requête mysqli
 				$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve
 												  FROM eleves el, classe cl
 												  WHERE el.classCode = cl.classCode
 												  AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"');
 				while($donnees = mysqli_fetch_assoc($data)) {
-					echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td><td></td</tr>';
+					echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td>
+					<td><button type="button" class="btn btn-sm btn-outline-danger">X</button></td></tr>';
 				};
 				if(isset($classCode)){
 					// On va éviter de faire appel à une autre page 
 			 	}	
+			}
 			}?>
 			</tbody>
 		</table>
@@ -80,7 +87,8 @@ include "navbar.html"
 	</div>
 </div><!--/.container-->
 
-
+<!--Font awesome's CDN!-->
+<script src="https://use.fontawesome.com/c9ef11106f.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -99,10 +107,12 @@ include "navbar.html"
 		$(".yo").each(function() {
 			// On récupère la valeur de leur attribut href
 			var href = $(this).attr('href');
+			var newClass = '?code=yo'
 			// Celui parmi eux qui correspond à l'attribut en URL, se voit attribué la classe active 
 			if (param === href) {
 				$(this).addClass("active")
-			} else {
+			} 
+			else {
 				// Les autres on leur enlève
 				$(this).removeClass("active");
 			}
