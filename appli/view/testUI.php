@@ -37,11 +37,12 @@ include "navbar.html"
 		</div>
 		<div class="card-body ">
 			<h4 class="card-title">Le ClassCode: #<?php if (isset($_GET['code'])) {echo $_GET['code'];}?></h4>
-			    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			    <p class="card-text">Partagez ce classCode avec vos élèves pour qu'ils s'inscrivent sur <a href="#">MasterClass</a>.</p>
+			    <a href="#" class="btn btn-primary">Ou ajoutez-les</a>
 
    	<!--Cette div centre le tableau -->
-	<div class="row justify-content-md-center">
-		<table id="tableDisplay" class="table table-striped table-hover w-50">
+	<div id="tableDisplay"class="row justify-content-md-center">
+		<table class="table table-striped table-hover w-50">
 		    <thead>
 		     <tr>
 		       <th scope="col">Nom</th>
