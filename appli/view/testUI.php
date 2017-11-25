@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "../controller/isLoggedController.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
