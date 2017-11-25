@@ -27,7 +27,7 @@
 	    <tbody>
 			<?php
 			// On démarre une requête mysqli avec une jointure et un ORDER BY qui classe les élèves par ordre alphabétique
-			$data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve
+			$data = mysqli_query($connexion, 'SELECT id_eleve, nom_eleve, prenom_eleve
 											  FROM eleves el, classe cl
 											  WHERE el.classCode = cl.classCode
 											  AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$classCode.'"
@@ -37,7 +37,7 @@
 			// On boucle pour l'affichage. On met les noms et la première lettre du prénom en majuscules 
 			while($donnees = mysqli_fetch_assoc($data)) {
 				echo '<tr><td>'.$num.'</td><td>'.strtoupper($donnees['nom_eleve']).'</td><td>'.ucfirst($donnees['prenom_eleve']).'</td>
-				<td></td></tr>';
+				<td><a href="deleteEleve.php?code='.$classCode.'&id='.$donnees['id_eleve'].'" class="btn btn-primary btn-sm" role="button">del</a></td></tr>';
 				$num ++;
 			};
 			?>
