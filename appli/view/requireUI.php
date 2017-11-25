@@ -1,10 +1,13 @@
-<h4 class="card-title">Le ClassCode: #<?php if (isset($_GET['code'])) {echo $_GET['code'];}?></h4>
+
+
+
+<h4 class="card-title">Le ClassCode: #<?php echo $classCode;?></h4>
     <p class="card-text">Partagez ce classCode avec vos élèves pour qu'ils s'inscrivent sur <a href="#">MasterClass</a>.</p>
 <!--Le formulaire d'ajout d'un élève-->
 <div class="row justify-content-md-center">
-	<form action="" method="post" class="form-inline">
+	<form action="addEleves.php?code=<?php echo $classCode;?>" method="post" class="form-inline">
 	  <div class="form-group mx-sm-3">
-	      <input type="text" name="nom_Eleve" class="form-control" id="nomClasse" placeholder="Nom">
+	      <input type="text" name="nom_eleve" class="form-control" id="nomClasse" placeholder="Nom">
 	  </div>
 	  <div class="form-group mx-sm-3">
 	      <input type="text" name="prenom_eleve" class="form-control" id="nomClasse" placeholder="Prénom">
@@ -12,7 +15,6 @@
 	  <button type="submit" name="newClass" class="btn btn-outline-success">Ajouter</button>
 	</form>
 </div>
-
 
 <!--Cette div centre le tableau -->
 <div id="tableDisplay" class="row justify-content-md-center">

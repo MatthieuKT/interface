@@ -22,7 +22,7 @@ if (isset($_POST['newClass']) && isset($_POST['nomClasse'])) {
     if (strlen($nomClasse) > 2) {
       $sql = 'INSERT INTO classe(classCode, prof_ID, nomClasse) VALUES ("'.$classCode.'", "'.$_SESSION['id'].'", "'.$nomClasse.'")';
       $insert = mysqli_query($connexion, $sql);
-      header('Location: ../view/testUI.php?code='.$classCode);
+      //header('Location: ../view/testUI.php?code='.$classCode);
     }
   }
 }

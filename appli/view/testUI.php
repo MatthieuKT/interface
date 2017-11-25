@@ -47,7 +47,7 @@ include "navbar.html"
 				}
 				// On affiche les tableaux de classes
 				else {
-				require_once "requireUI.php";	
+					require_once "requireUI.php";	
 				}
 				}?>
 		</div><!--/.card-body-->
