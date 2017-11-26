@@ -1,20 +1,26 @@
-<?php
-// Connexion à la DB
-require_once "../model/DBConnexion.php";
-// Si tous les champs sont bien remplis
-if (isset($_POST['inputNom']) && isset($_POST['inputPrenom']) && isset($_POST['classCode'])) {
+<?php 
+if (isset($_GET['code']) && isset($_POST['nom_eleve']) && isset($_POST['prenom_eleve'])) {
+ 	$code = htmlspecialchars($_GET['code']);
+ 	$nom_eleve = htmlspecialchars($_POST['nom_eleve']);
+ 	$prenom_eleve = htmlspecialchars($_POST['prenom_eleve']);
 
-	// On rend inoffensives les balises HTML que le visiteur aurait pu entrer dans nos input
-	$nom = htmlspecialchars($_POST['inputNom']);
-	$prenom = htmlspecialchars($_POST['inputPrenom']);
-	$classCode= htmlspecialchars($_POST['classCode']);
+ 	if (is_string($nom_eleve) && is_string($prenom_eleve)) {
+ 		if ( strlen($nom_eleve) > 1 && strlen($prenom_eleve) > 1 ) {
+ 			require_once "../model/DBConnexion.php";
+ 			$isExist = 'SELECT nom_eleve, prenom_eleve FROM eleves WHERE nom_eleve="'.$nom_eleve.'" AND prenom_eleve="'.$prenom_eleve.'"';
+			$exist = mysqli_query($connexion, $isExist);
+			$row = mysqli_num_rows($exist);
 
-	echo $classCode;
+			if ($row > 0) {
+				echo "cet élève existe déjà dans cette classe";
+			}
 
-	// On regarde si le nom et prénom saisis sont bien de type string
-	if (is_string($nom) && is_string($prenom)) {
-		$sql = 'INSERT INTO eleves (classCode, nom_eleve, prenom_eleve) VALUES ( "'.$classCode.'", "'.$nom.'", "'.$prenom.'")';
-		$insert = mysqli_query($connexion, $sql);
-	}
-	header('Location: ../view/deleteClass.php');
-}
+			else {
+			 	$addEleves = mysqli_query($connexion,'INSERT INTO eleves(classCode, nom_eleve, prenom_eleve) VALUES ("'.$code.'", "'.$nom_eleve.'"
+				, "'.$prenom_eleve.'")');
+				header('Location: ../view/class.php?code='.$code);
+			}
+ 		}
+ 	}
+ } 
+ ?>

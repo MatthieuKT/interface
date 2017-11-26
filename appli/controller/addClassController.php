@@ -1,10 +1,8 @@
 <?php
 session_start();
-  echo "yo"; 
 if (isset($_POST['newClass']) && isset($_POST['nomClasse'])) {
 	$classCode = rand(1000,9999);
 	$nomClasse = htmlspecialchars($_POST['nomClasse']);
-  echo "yo";
 
   // Connexion à la DB
   require_once "../model/DBConnexion.php";
@@ -22,7 +20,7 @@ if (isset($_POST['newClass']) && isset($_POST['nomClasse'])) {
     if (strlen($nomClasse) > 2) {
       $sql = 'INSERT INTO classe(classCode, prof_ID, nomClasse) VALUES ("'.$classCode.'", "'.$_SESSION['id'].'", "'.$nomClasse.'")';
       $insert = mysqli_query($connexion, $sql);
-      //header('Location: ../view/testUI.php?code='.$classCode);
+      header('Location: ../view/class.php?code='.$classCode);
     }
   }
 }

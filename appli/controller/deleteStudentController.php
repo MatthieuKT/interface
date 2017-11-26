@@ -9,5 +9,5 @@ if (isset($_GET['code']) && isset($_GET['id'])) {
 	// On effectue cette requête
 	$req = mysqli_query($connexion, $sql);
 	// On redirige ensuite vers le gestionnaire de classes, le paramètre sert afficher la classe ou le changement à été effectué
-	header('Location: testUI.php?code='.$code);
+	header('Location: ../view/class.php?code='.$code);
 }

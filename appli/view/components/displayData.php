@@ -2,7 +2,7 @@
     <p class="card-text">Partagez ce classCode avec vos élèves pour qu'ils s'inscrivent sur <a href="#">MasterClass</a>.</p>
 <!--Le formulaire d'ajout d'un élève-->
 <div class="row justify-content-md-center">
-	<form action="addEleves.php?code=<?php echo $classCode;?>" method="post" class="form-inline">
+	<form action="../controller/addStudentsController.php?code=<?php echo $classCode;?>" method="post" class="form-inline">
 	  <div class="form-group mx-sm-3">
 	      <input type="text" name="nom_eleve" class="form-control" id="nomClasse" placeholder="Nom">
 	  </div>
@@ -37,7 +37,7 @@
 			// On boucle pour l'affichage. On met les noms et la première lettre du prénom en majuscules 
 			while($donnees = mysqli_fetch_assoc($data)) {
 				echo '<tr><td>'.$num.'</td><td>'.strtoupper($donnees['nom_eleve']).'</td><td>'.ucfirst($donnees['prenom_eleve']).'</td>
-				<td><a href="deleteEleve.php?code='.$classCode.'&id='.$donnees['id_eleve'].'" class="btn btn-primary btn-sm" role="button">del</a></td></tr>';
+				<td><a href="../controller/deleteStudentController.php?code='.$classCode.'&id='.$donnees['id_eleve'].'" class="btn btn-primary btn-sm" role="button">del</a></td></tr>';
 				$num ++;
 			};
 			?>

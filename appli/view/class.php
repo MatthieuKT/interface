@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "../controller/isLoggedController.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,91 +16,85 @@ session_start();
 // Connexion à la DB
 require_once "../model/DBConnexion.php";
 // Navbar
-include "navbar.html"
+include "components/navbar.html"
 ?>
-<div class="container">
-<h2>Créer une classe</h2>
-	<!--Ajouter des controlleurs ici!!!-->
-	<form class="form-inline" action="../controller/classController.php" method="post">
-	  <div class="form-group mx-sm-3">
-	    <input type="text" name="nomClasse" class="form-control" id="nomClasse" placeholder="Nom de la classe">
-	  </div>
-	  <button type="submit" name="newClass" class="btn btn-outline-success">Créer!</button>
-	</form>
+<div class="container">	
+	<div id="main" class="card text-center">
+	    <div class="card-header">
+			<ul class="nav nav-tabs card-header-tabs">
+				  <li class="nav-item">
+   					 <a class="yo nav-link" href="?code=new">Nouvelle classe</a>
+ 				  </li>
+				<?php
+				// A rajouter absolument: empécher d'accéder aux pages sans login !!!!!!
+					$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
+					while($donnees = mysqli_fetch_assoc($resultat)) {
+						echo '<li class="nav-item">
+								<a class="yo nav-link" href="?code='.$donnees["classCode"].'">'.$donnees["nomClasse"].'</a>
+							 </li>';
+					}
+				?>
+			</ul>	
+		</div>
+		<div id="content" class="card-body">
+				<?php
+				// Si le classCode est présent dans l'URL ET est un nombre
+				if (isset($_GET['code']) /*&& is_numeric($_GET['code']*/) {
+				// On sécurise la valeur du paramètre
+				$classCode = htmlspecialchars($_GET['code']);
+				// On affiche le formulaire de nouvelle classe
+				if ($classCode === "new") {
+					require_once "components/addClassForm.php";
+				}
+				// On affiche les tableaux de classes
+				else {
+					require_once "components/displayData.php";	
+				}
+				}?>
+		</div><!--/.card-body-->
 
-	<?php 
-/*	if (isset($_GET['res'])) {
-		$res = $_GET['res'];
-		if ($res === "1") {
-			echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-	  				<strong>Votre classe a bien été créée!</strong> Suivez les étapes suivantes.
-	  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	    				<span aria-hidden="true">&times;</span>
-	  				</button>
-				  </div>';
-		}
-	}*/
-	?>
-	<div id="classList">
-		<h2>Mes classes</h2>
-
-	<?php
-	$resultat = mysqli_query($connexion, 'SELECT classCode, nomClasse FROM classe WHERE prof_ID="'.$_SESSION["id"].'"');
-		// On comptabilise le nombre de classes, si il est vide on lui prépare un tuto
-		$row = mysqli_num_rows($resultat);
-		// Si la requête retourne une ligne, on affiche les classes
-		if($row > 0) {
-			while($donnees = mysqli_fetch_assoc($resultat)) {
-				echo '<form action="" method="post" class="formClass">
-						<input class="hiddenPostClass" type="hidden" id="postClass" name="postClass" value="'.$donnees["classCode"].'">
-						<button type="submit" class="postClass btn btn-primary">'.$donnees["nomClasse"].'</button>		
-					  </form>';
-			}
-			//Si il a cliqué sur une de ses classes
-			if (isset($_POST['postClass'])) {
-			  $postClass = htmlspecialchars($_POST['postClass']);
-			  // On va chercher les données en rapport avec sa requête (le nom et prénom de chaque élève de la classe cliquée)
-			  $data = mysqli_query($connexion, 'SELECT nom_eleve, prenom_eleve FROM eleves el, classe cl WHERE el.classCode = cl.classCode AND cl.prof_ID="'.$_SESSION["id"].'" AND el.classCode="'.$postClass.'"');
-	?>
-
-
-		<div id="tableDisplay" class="col-md-6">
-			<p>classCode: <b>#<?php echo $postClass;?></b></p>
-			<table class="table">
-			   <thead>
-			     <tr>
-			       <th scope="col">Nom</th>
-			       <th scope="col">Prénom</th>
-			     </tr>
-			   </thead>
-			   <tbody>
-		<?php
-		  while($donnees = mysqli_fetch_assoc($data)) {
-		    echo '<tr><td>' .$donnees['nom_eleve']. '</td><td>' .$donnees['prenom_eleve']. '</td></tr>';
-		  }
-		  echo '</tbody>
-			</table>';
-			  if(isset($postClass)){
-			  	echo '<form action="deleteClass" method="post">
-			  			<input type="hidden" name="modifyClass" value="'.$postClass.'">
-			  		    <input id="valider" type="submit" class="btn btn-outline-secondary" value="modifier"/>
-			  		  </form>';
-		 		}
-		 	}
-		}
-		// Si l'utilisateur n'a pas encore de classes, on lui fait un petit tuto contenu dans un require
-		else {
-			echo " tuto pour créer une classe!";
-		}?>
-	</div><!--/.tableDisplay-->
-</div><!--/.classList-->
+	</div>
 </div><!--/.container-->
 
+<!--Font awesome's CDN!-->
+<script src="https://use.fontawesome.com/c9ef11106f.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script type="text/javascript">
+	// On se base sur l'URL pour définir la classe active des liens!
+	$(document).ready(function() {
+		// On stocke la valeur de l'URL dans une variable
+		var url = window.location.href;
+		// On ne veut que ce qu'il y a après le "?" donc on récupère sa position
+		var pos = url.indexOf('?');
+		// On détermine la longueur de l'URL entière
+		var len = url.length;
+		// On soustrais la longueur totale de l'URL à l'index de "?", il nous reste donc le paramètre
+		var param = url.substr(pos, len - pos);
+
+		$(".yo").each(function() {
+			// On récupère la valeur de leur attribut href
+			var href = $(this).attr('href');
+			var newClass = '?code=new'
+			// Celui parmi eux qui correspond à l'attribut en URL, se voit attribué la classe active 
+			if (param === href) {
+				$(this).addClass("active")
+				// le text center n'est là que pour les tableaux
+				//$('#main').addClass('text-center');
+			} else if (param === newClass) {
+				// Le formulaire newClassForm peut ainsi être affiché normalement
+				//$('#main').removeClass('text-center');
+			}
+			else {
+				// Les autres on leur enlève l'actif
+				$(this).removeClass("active");
+			}
+		});
+
+	});
 
 </script>
 </body>
 </html>
+
