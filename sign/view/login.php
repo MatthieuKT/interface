@@ -48,16 +48,16 @@
 </div>
 
 <div id ="signForm" class="col-md-5 border border-primary rounded">
-    <form action="../controller/loginController.php" method="POST">
+    <form action="../controller/loginController.php" method="POST" onsubmit="return verifForm(this)">
       <h1>Connexion</h1>
 	  <div class="form-group">
 	    <label for="mail">Email</label>
-		<input type="email" class="form-control" id="mail" name="mail" aria-describedby="emailHelp" placeholder="Enter email">
+		<input type="email" name="mail" onblur="verifMail(this)" class="form-control" aria-describedby="emailHelp" placeholder="Email">
 		<small id="emailHelp" class="form-text text-muted">Votre email ne sera jamais partagé avec quiconque.</small>
 	  </div>
 	  <div class="form-group">
 	    <label for="pass">Mot de passe:</label>
-	    <input type="password" class="form-control" id="passwordCheck" name="pass" placeholder="Password">
+	    <input type="password" name="pass" onblur="verifPass(this)" class="form-control" placeholder="Mot de passe">
 	  </div>
 	  <button type="submit" class="btn btn-primary">Se connecter</button>
 	</form>
@@ -65,6 +65,6 @@
 </div><!--/.row-->
 </div><!--/.container-->
 
-<script type="text/javascript" src="../controller/formController.js"></script>
+<script type="text/javascript" src="../controller/signInController.js"></script>
 </body>
 </html>

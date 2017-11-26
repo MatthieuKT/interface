@@ -1,10 +1,10 @@
 <?php
-if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['pass']) && isset($_POST['passConfirm']) && isset($_POST['mail'])) {
+if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['pass']) && isset($_POST['pass2']) && isset($_POST['mail'])) {
 
-	$lastName = htmlspecialchars($_POST['lastName']);
-	$firstName = htmlspecialchars($_POST['firstName']);
+	$lastName = htmlspecialchars($_POST['nom']);
+	$firstName = htmlspecialchars($_POST['prenom']);
 	$pass = htmlspecialchars($_POST['pass']);
-	$passConfirm = htmlspecialchars($_POST['passConfirm']);
+	$passConfirm = htmlspecialchars($_POST['pass2']);
 	$mail = htmlspecialchars($_POST['mail']);
 	$pass_hache = $passConfirm;
 		

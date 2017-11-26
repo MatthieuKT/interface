@@ -19,27 +19,36 @@
 		<div class="col-md-7">			
 		</div>
 
-		<div id="signForm" class="col-md-5 border border-primary rounded">
-			<form action="../controller/signUpController.php" method="POST">
+	<div id="signForm" class="col-md-5 border border-primary rounded">
+		<form action="../controller/signUpController.php" method="POST" onsubmit="return verifForm(this)">
 		  <div class="form-group">
-		    <label for="nom">Nom:</label>
-		    <input type="text" class="form-control" id="nom" name="lastName" placeholder="Nom">
+	        <label for="nom">Nom: </label>
+	        <input type="text" name="nom" onblur="verifNom(this)" class="form-control" placeholder="nom" required>
+	          <div class="invalid-feedback">
+		        il faut au moins deux carractères pour le nom
+		      </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="nom">Prénom:</label>
-		    <input type="text" class="form-control" id="prenom" name="firstName" placeholder="Prénom">
+		    <label for="prenom">Prénom:</label>
+		    <input type="text" name="prenom" onblur="verifPrenom(this)" class="form-control" placeholder="Prénom" required>
+	          <div class="invalid-feedback">
+		        il faut au moins deux carractères pour le prénom
+		      </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="passwordCheck">Mot de passe:</label>
-		    <input type="password" class="form-control" id="passwordCheck" name="pass" placeholder="Password">
+		    <label for="pass">Mot de passe:</label>
+		    <input type="password" name="pass" id="pass1" onblur="verifPass(this)" class="form-control" placeholder="Password" required>
 		  </div>
 		  <div class="form-group">
-		    <label for="passwordCheck2">Retapez votre mot de passe:</label>
-		    <input type="password" class="form-control" id="passwordCheck2" name="passConfirm" placeholder="Password">
-		  </div>
+		    <label for="pass2">Retapez votre mot de passe:</label>
+		    <input type="password" name="pass2" id="pass2" onblur="verifPass2(this)" class="form-control" placeholder="Password" required>
+		  </div> 
 		  <div class="form-group">
-		    <label for="exampleInputEmail1">Email:</label>
-		    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="mail" placeholder="Entrez votre email">
+		    <label for="mail">Email:</label>
+		    <input type="email" name="mail" onblur="verifMail(this)" class="form-control" aria-describedby="emailHelp"  placeholder="Entrez votre email" required>
+	          <div class="invalid-feedback">
+		        Entrez un email valide
+		      </div>
 		    <small id="emailHelp" class="form-text text-muted">Vos données ne seront jamais partagées avec quiconque.</small>
 		  </div>
 		  <button type="submit" class="btn btn-primary">Démarrer!</button>
@@ -47,7 +56,8 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../controller/SignUpController.js"></script>
 
-<script type="text/javascript" src="../controller/formController.js"></script>
 </body>
 </html>
