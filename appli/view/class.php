@@ -52,8 +52,8 @@ include "components/navbar.html"
 				}
 				}?>
 		</div><!--/.card-body-->
+	</div><!--/#main-->
 
-	</div>
 </div><!--/.container-->
 
 <!--Font awesome's CDN!-->

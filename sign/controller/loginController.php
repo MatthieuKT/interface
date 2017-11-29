@@ -23,7 +23,7 @@ if (isset($_POST['mail']) && isset($_POST['pass'])) {
 			$_SESSION['nom'] = $donnees['nom'];
 			$_SESSION['prenom'] = $donnees['prenom'];
 			// On le fait entrer
-			header('Location: ../../appli/index.php');
+			header('Location: ../../appli/view/index.php');
 		}	
 		// Sinon, il est redirectionné vers la page d'inscription
  		else {

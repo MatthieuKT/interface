@@ -1,6 +1,6 @@
 <?php
 session_start(); 
-require_once "controller/isLoggedController.php";
+require_once "../controller/isLoggedController.php";
 // strtoupper met le nom en majuscules
 $nom = strtoupper($_SESSION["nom"]);
 // ucfirst() met la première lettre du prénom en majuscule 
@@ -12,12 +12,12 @@ $prenom = ucfirst($_SESSION["prenom"]);
 	<meta charset="utf-8">
 	<title>Masterpiece</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="view/css/style.css">
+	<link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <?php
-require_once "view/components/navbar.html";
+require_once "components/navbar.html";
 ?>
 
 <div class="container">
@@ -26,7 +26,7 @@ require_once "view/components/navbar.html";
 		<div id="welcome" >
 		<h1>Bienvenue <?php echo $nom . " " . $prenom; ?>!</h1> 
 		<nav>
-			<a href="view/class.php?code=new" class="btn btn-outline-success" role="button">Mes classes</a>
+			<a href="class.php?code=new" class="btn btn-outline-success" role="button">Mes classes</a>
 			<a href="view/cours.php" class="btn btn-outline-success" role="button">Créer un cours</a>
 		</nav>
 		</div>
